@@ -2,6 +2,7 @@ import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { config } from "./config/app.config";
 
 const app = express();
 
@@ -9,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
     cors({
-        origin: process.env.APP_ORIGIN,
+        origin: config.APP_ORIGIN,
         credentials: true,
     })
 );
@@ -22,8 +23,8 @@ app.get("/", async (req: Request, res: Response, next: NextFunction) => {
     });
 });
 
-app.listen(process.env.PORT, async () => {
+app.listen(config.PORT, async () => {
     console.log(
-        `Server listening on port ${process.env.PORT} in ${process.env.NODE_ENV}`
+        `Server listening on port ${config.PORT} in ${config.NODE_ENV}`
     );
 });
