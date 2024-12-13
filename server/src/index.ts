@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import { config } from "./config/app.config";
 import { HTTPSTATUS } from "./config/http.config";
 import { asyncHandler } from "./middlewares /asyncHandler";
+import connectDatabase from "./database/database";
 
 const app = express();
 
@@ -32,4 +33,5 @@ app.listen(config.PORT, async () => {
     console.log(
         `Server listening on port ${config.PORT} in ${config.NODE_ENV}`
     );
+    await connectDatabase();
 });
