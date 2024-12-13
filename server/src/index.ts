@@ -2,10 +2,12 @@ import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import ip from "ip";
 import { config } from "./config/app.config";
 import { HTTPSTATUS } from "./config/http.config";
 import { asyncHandler } from "./middlewares /asyncHandler";
 import connectDatabase from "./database/database";
+import { errorHandler } from "./middlewares /errorHandler";
 
 const app = express();
 
@@ -20,6 +22,7 @@ app.use(
 
 app.use(cookieParser());
 
+// api routes
 app.get(
     "/",
     asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
@@ -29,9 +32,23 @@ app.get(
     })
 );
 
+// api routes
+app.all(
+    "*",
+    asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+        res.status(HTTPSTATUS.NOT_FOUND).json({
+            message: "Router not found",
+        });
+    })
+);
+
+app.use(errorHandler);
+
 app.listen(config.PORT, async () => {
     console.log(
-        `Server listening on port ${config.PORT} in ${config.NODE_ENV}`
+        `Server listening on ${ip.address()}:${config.PORT} in ${
+            config.NODE_ENV
+        }`
     );
     await connectDatabase();
 });
