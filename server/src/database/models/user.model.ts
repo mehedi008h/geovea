@@ -4,7 +4,7 @@ export interface UserDocument extends Document {
     name: string;
     email: string;
     password: string;
-    phone: number;
+    phone: string;
     role: string;
     liveLocation: {
         latitude: number;
@@ -38,13 +38,11 @@ const userSchema = new Schema<UserDocument>(
 const customerSchema = new Schema<UserDocument>(
     {
         ...userSchema.obj,
-        email: { type: String, required: true, unique: true },
-        password: { type: String, required: true },
-        phone: { type: Number, required: true },
+        phone: { type: String, required: true },
         role: {
             type: String,
-            enum: ["DeliveryPartner"],
-            default: "DeliveryPartner",
+            enum: ["Customer"],
+            default: "Customer",
         },
         liveLocation: {
             latitude: { type: Number },
@@ -64,7 +62,7 @@ const deliveryPartnerSchema = new Schema<UserDocument>(
         ...userSchema.obj,
         email: { type: String, required: true, unique: true },
         password: { type: String, required: true },
-        phone: { type: Number, required: true },
+        phone: { type: String, required: true },
         role: {
             type: String,
             enum: ["DeliveryPartner"],
