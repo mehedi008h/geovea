@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
+import { compareValue, hashValue } from "../../common/utils/bcrypt";
 
 export interface UserDocument extends Document {
     name: string;
@@ -13,6 +14,7 @@ export interface UserDocument extends Document {
     address: string;
 
     isActivated: boolean;
+    comparePassword(value: string): Promise<boolean>;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -97,6 +99,18 @@ const adminSchema = new Schema<UserDocument>(
         toJSON: {},
     }
 );
+
+// delivery partner
+deliveryPartnerSchema.pre("save", async function (next) {
+    if (this.isModified("password")) {
+        this.password = await hashValue(this.password);
+    }
+    next();
+});
+
+deliveryPartnerSchema.methods.comparePassword = async function (value: string) {
+    return compareValue(value, this.password);
+};
 
 export const Customer = mongoose.model<UserDocument>(
     "Customer",
