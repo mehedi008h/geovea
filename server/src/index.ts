@@ -3,6 +3,8 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { config } from "./config/app.config";
+import { HTTPSTATUS } from "./config/http.config";
+import { asyncHandler } from "./middlewares /asyncHandler";
 
 const app = express();
 
@@ -17,11 +19,14 @@ app.use(
 
 app.use(cookieParser());
 
-app.get("/", async (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json({
-        message: "Hello Subscribers!!!",
-    });
-});
+app.get(
+    "/",
+    asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+        res.status(HTTPSTATUS.OK).json({
+            message: "Hello Subscribers!!!",
+        });
+    })
+);
 
 app.listen(config.PORT, async () => {
     console.log(
