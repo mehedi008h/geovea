@@ -6,6 +6,7 @@ import {
     customerLoginSchema,
     deliveryPartnerSchema,
 } from "../../common/validators/auth.validator";
+import { UnauthorizedException } from "../../common/utils/catch-errors";
 
 export class AuthController {
     private authService: AuthService;
@@ -46,6 +47,27 @@ export class AuthController {
                 deliveryPartner,
                 accessToken,
                 refreshToken,
+            });
+        }
+    );
+
+    // refresh token
+    public refreshToken = asyncHandler(
+        async (req: Request, res: Response): Promise<any> => {
+            const { refreshToken } = req.body;
+
+            // throw error if token not given
+            if (!refreshToken) {
+                throw new UnauthorizedException("Missing refresh token");
+            }
+
+            const { accessToken, refreshToken: newRefreshToken } =
+                await this.authService.getRefreshToken(refreshToken);
+
+            return res.status(HTTPSTATUS.CREATED).json({
+                message: "Token refreshed",
+                accessToken,
+                newRefreshToken,
             });
         }
     );

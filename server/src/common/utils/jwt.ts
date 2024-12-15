@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { config } from "../../config/app.config";
 import { UserDocument } from "../../database/models/user.model";
 
@@ -22,4 +22,14 @@ export const generateToken = (user: AccessTPayload) => {
     );
 
     return { accessToken, refreshToken };
+};
+
+// generate token
+export const verifyJwtToken = (refreshToken: string) => {
+    const user = jwt.verify(
+        refreshToken,
+        config.JWT.REFRESH_SECRET
+    ) as JwtPayload;
+
+    return user;
 };

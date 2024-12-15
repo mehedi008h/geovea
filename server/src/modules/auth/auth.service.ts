@@ -1,10 +1,10 @@
 import { ErrorCode } from "../../common/enums/error-code.enum";
+import { DeliveryPartnerLoginDto } from "../../common/interface/auth.interface";
 import {
-    CustomerLoginDto,
-    DeliveryPartnerLoginDto,
-} from "../../common/interface/auth.interface";
-import { BadRequestException } from "../../common/utils/catch-errors";
-import { generateToken } from "../../common/utils/jwt";
+    BadRequestException,
+    UnauthorizedException,
+} from "../../common/utils/catch-errors";
+import { generateToken, verifyJwtToken } from "../../common/utils/jwt";
 import { logger } from "../../common/utils/logger";
 import { Customer, DeliveryPartner } from "../../database/models";
 
@@ -77,6 +77,35 @@ export class AuthService {
         );
         return {
             deliveryPartner,
+            accessToken,
+            refreshToken,
+        };
+    }
+
+    // get refresh token
+    public async getRefreshToken(token: string) {
+        logger.info(`Refresh Token: ${token}`);
+
+        // verify token and decode payload
+        const decoded = verifyJwtToken(token);
+
+        let user;
+        if (decoded.role === "Customer") {
+            user = await Customer.findById(decoded.userId);
+        } else if (decoded.role === "DeliveryPartner") {
+            user = await DeliveryPartner.findById(decoded.userId);
+        } else {
+            throw new UnauthorizedException("Invalid token role");
+        }
+
+        if (!user) {
+            throw new UnauthorizedException("Invalid refresh token");
+        }
+
+        // generate tokens
+        const { accessToken, refreshToken } = generateToken(user);
+
+        return {
             accessToken,
             refreshToken,
         };
