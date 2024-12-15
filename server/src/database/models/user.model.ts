@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema, Types } from "mongoose";
 import { compareValue, hashValue } from "../../common/utils/bcrypt";
 
 export interface UserDocument extends Document {
@@ -12,7 +12,7 @@ export interface UserDocument extends Document {
         longitude: number;
     };
     address: string;
-
+    branch: Types.ObjectId;
     isActivated: boolean;
     comparePassword(value: string): Promise<boolean>;
     createdAt: Date;
@@ -51,6 +51,14 @@ const customerSchema = new Schema<UserDocument>(
             longitude: { type: Number },
         },
         address: { type: String },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        },
+        updatedAt: {
+            type: Date,
+            default: Date.now,
+        },
     },
     {
         timestamps: true,
@@ -74,7 +82,19 @@ const deliveryPartnerSchema = new Schema<UserDocument>(
             latitude: { type: Number },
             longitude: { type: Number },
         },
+        branch: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Branch",
+        },
         address: { type: String },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        },
+        updatedAt: {
+            type: Date,
+            default: Date.now,
+        },
     },
     {
         timestamps: true,
@@ -92,6 +112,14 @@ const adminSchema = new Schema<UserDocument>(
             type: String,
             enum: ["Admin"],
             default: "Admin",
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        },
+        updatedAt: {
+            type: Date,
+            default: Date.now,
         },
     },
     {
