@@ -1,5 +1,8 @@
 import { ErrorCode } from "../../common/enums/error-code.enum";
-import { DeliveryPartnerLoginDto } from "../../common/interface/auth.interface";
+import {
+    DeliveryPartnerLoginDto,
+    FetchUserDto,
+} from "../../common/interface/auth.interface";
 import {
     BadRequestException,
     UnauthorizedException,
@@ -108,6 +111,28 @@ export class AuthService {
         return {
             accessToken,
             refreshToken,
+        };
+    }
+
+    // gfetch user
+    public async fetchUserById(userData: FetchUserDto) {
+        logger.info(`User ID: ${userData.userId}`);
+
+        let user;
+        if (userData.role === "Customer") {
+            user = await Customer.findById(userData.userId);
+        } else if (userData.role === "DeliveryPartner") {
+            user = await DeliveryPartner.findById(userData.userId);
+        } else {
+            throw new UnauthorizedException("Invalid token role");
+        }
+
+        if (!user) {
+            throw new UnauthorizedException("User not found");
+        }
+
+        return {
+            user,
         };
     }
 }

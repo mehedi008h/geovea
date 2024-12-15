@@ -71,4 +71,21 @@ export class AuthController {
             });
         }
     );
+
+    // fetch user information
+    public fetchUser = asyncHandler(
+        async (req: Request, res: Response): Promise<any> => {
+            const { userId, role } = req.body;
+
+            const { user } = await this.authService.fetchUserById({
+                userId,
+                role,
+            });
+
+            return res.status(HTTPSTATUS.OK).json({
+                message: "User fetched successfully",
+                user,
+            });
+        }
+    );
 }
