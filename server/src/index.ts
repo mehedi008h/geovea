@@ -9,6 +9,7 @@ import { asyncHandler } from "./middlewares/asyncHandler";
 import connectDatabase from "./database/database";
 import { errorHandler } from "./middlewares/errorHandler";
 import authRoutes from "./modules/auth/auth.routes";
+import categoryRoutes from "./modules/category/category.routes";
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
@@ -35,6 +36,7 @@ app.get(
 );
 
 app.use(`${BASE_PATH}/auth`, authRoutes);
+app.use(`${BASE_PATH}/category`, categoryRoutes);
 
 // not found route
 app.all(

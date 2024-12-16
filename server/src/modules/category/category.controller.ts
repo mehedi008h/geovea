@@ -25,4 +25,73 @@ export class CategoryController {
             });
         }
     );
+
+    // get all category
+    public getAllCategory = asyncHandler(
+        async (req: Request, res: Response): Promise<any> => {
+            const categorys = await this.categoryService.findAll();
+
+            // return success response
+            return res.status(HTTPSTATUS.OK).json({
+                message: "Gat all category successfully",
+                categorys,
+            });
+        }
+    );
+
+    // get category details
+    public getCategory = asyncHandler(
+        async (req: Request, res: Response): Promise<any> => {
+            // get category id from params
+            const { categoryId } = req.params;
+
+            const category = await this.categoryService.findCategory(
+                categoryId
+            );
+
+            // return success response
+            return res.status(HTTPSTATUS.OK).json({
+                message: "Gat category details successfully",
+                category,
+            });
+        }
+    );
+
+    // delete category
+    public deleteCategory = asyncHandler(
+        async (req: Request, res: Response): Promise<any> => {
+            // get category id from params
+            const { categoryId } = req.params;
+
+            // delete category
+            await this.categoryService.deleteById(categoryId);
+
+            // return success response
+            return res.status(HTTPSTATUS.OK).json({
+                message: "Delete category successfully",
+            });
+        }
+    );
+
+    // update category
+    public updateCategory = asyncHandler(
+        async (req: Request, res: Response): Promise<any> => {
+            // get category id from params
+            const { categoryId } = req.params;
+            // validate request body
+            const body = categorySchema.parse(req.body);
+
+            // update category
+            const category = await this.categoryService.update(
+                categoryId,
+                body
+            );
+
+            // return success response
+            return res.status(HTTPSTATUS.OK).json({
+                message: "Update category successfully",
+                category,
+            });
+        }
+    );
 }

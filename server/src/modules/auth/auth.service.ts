@@ -5,6 +5,7 @@ import {
 } from "../../common/interface/auth.interface";
 import {
     BadRequestException,
+    NotFoundException,
     UnauthorizedException,
 } from "../../common/utils/catch-errors";
 import { generateToken, verifyJwtToken } from "../../common/utils/jwt";
@@ -128,7 +129,7 @@ export class AuthService {
         }
 
         if (!user) {
-            throw new UnauthorizedException("User not found");
+            throw new NotFoundException("User not found");
         }
 
         return {
