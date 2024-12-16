@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { HTTPSTATUS } from "../../config/http.config";
-import { asyncHandler } from "../../middlewares /asyncHandler";
 import { AuthService } from "./auth.service";
 import {
     customerLoginSchema,
     deliveryPartnerSchema,
 } from "../../common/validators/auth.validator";
 import { UnauthorizedException } from "../../common/utils/catch-errors";
+import { asyncHandler } from "../../middlewares/asyncHandler";
 
 export class AuthController {
     private authService: AuthService;

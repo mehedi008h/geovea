@@ -6,6 +6,10 @@ export interface UserDocument extends Document {
     email: string;
     password: string;
     phone: string;
+    image: {
+        public_id: string;
+        url: string;
+    };
     role: string;
     liveLocation: {
         latitude: number;
@@ -23,6 +27,16 @@ export interface UserDocument extends Document {
 const userSchema = new Schema<UserDocument>(
     {
         name: { type: String },
+        image: {
+            public_id: {
+                type: String,
+                required: true,
+            },
+            url: {
+                type: String,
+                required: true,
+            },
+        },
         role: {
             type: String,
             enum: ["Customer", "Admin", "DeliveryPartner"],

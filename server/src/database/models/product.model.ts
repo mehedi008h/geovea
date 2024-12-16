@@ -2,7 +2,12 @@ import mongoose, { Document, Schema, Types } from "mongoose";
 
 export interface ProductDocument extends Document {
     name: string;
-    image: string;
+    images: [
+        {
+            public_id: string;
+            url: string;
+        }
+    ];
     price: number;
     discountPrice: number;
     quantity: string;
@@ -15,7 +20,18 @@ export interface ProductDocument extends Document {
 const productSchema = new Schema<ProductDocument>(
     {
         name: { type: String, required: true },
-        image: { type: String, required: true },
+        images: [
+            {
+                public_id: {
+                    type: String,
+                    required: true,
+                },
+                url: {
+                    type: String,
+                    required: true,
+                },
+            },
+        ],
         price: { type: Number, required: true },
         discountPrice: { type: Number },
         quantity: { type: String, required: true },

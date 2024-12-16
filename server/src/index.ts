@@ -5,9 +5,9 @@ import cookieParser from "cookie-parser";
 import ip from "ip";
 import { config } from "./config/app.config";
 import { HTTPSTATUS } from "./config/http.config";
-import { asyncHandler } from "./middlewares /asyncHandler";
+import { asyncHandler } from "./middlewares/asyncHandler";
 import connectDatabase from "./database/database";
-import { errorHandler } from "./middlewares /errorHandler";
+import { errorHandler } from "./middlewares/errorHandler";
 import authRoutes from "./modules/auth/auth.routes";
 
 const app = express();
