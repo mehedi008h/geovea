@@ -10,6 +10,7 @@ import connectDatabase from "./database/database";
 import { errorHandler } from "./middlewares/errorHandler";
 import authRoutes from "./modules/auth/auth.routes";
 import categoryRoutes from "./modules/category/category.routes";
+import productRoutes from "./modules/product/product.routes";
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
@@ -37,6 +38,7 @@ app.get(
 
 app.use(`${BASE_PATH}/auth`, authRoutes);
 app.use(`${BASE_PATH}/category`, categoryRoutes);
+app.use(`${BASE_PATH}/product`, productRoutes);
 
 // not found route
 app.all(

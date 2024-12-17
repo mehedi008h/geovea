@@ -10,7 +10,7 @@ export interface ProductDocument extends Document {
     ];
     price: number;
     discountPrice: number;
-    quantity: string;
+    quantity: number;
     category: Types.ObjectId;
     createdAt: Date;
     updatedAt: Date;
@@ -34,7 +34,7 @@ const productSchema = new Schema<ProductDocument>(
         ],
         price: { type: Number, required: true },
         discountPrice: { type: Number },
-        quantity: { type: String, required: true },
+        quantity: { type: Number, required: true, default: 1 },
         category: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Category",

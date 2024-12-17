@@ -17,11 +17,12 @@ export class CategoryController {
             // validate request body
             const body = categorySchema.parse(req.body);
 
-            await this.categoryService.newCategory(body);
+            const category = await this.categoryService.newCategory(body);
 
             // return success response
             return res.status(HTTPSTATUS.CREATED).json({
                 message: "Category Created successfully",
+                category,
             });
         }
     );
