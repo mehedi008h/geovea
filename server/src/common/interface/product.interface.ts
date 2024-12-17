@@ -20,3 +20,14 @@ export interface ProductDto {
     quantity: number;
     category: string;
 }
+
+// branch
+export interface BranchDto {
+    name: string;
+    location: {
+        latitude: number;
+        longitude: number;
+    };
+    address: string;
+    deliveryPartners: string;
+}

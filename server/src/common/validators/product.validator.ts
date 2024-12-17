@@ -24,3 +24,18 @@ export const productSchema = z.object({
         message: "Invalid category ID",
     }),
 });
+
+// branch schema
+export const branchSchema = z.object({
+    name: z.string().trim(),
+    location: z.object({
+        latitude: z.number(),
+        longitude: z.number(),
+    }),
+    address: z.string(),
+    deliveryPartners: z
+        .string()
+        .refine((val) => mongoose.Types.ObjectId.isValid(val), {
+            message: "Invalid Delivery Partner ID",
+        }),
+});

@@ -8,7 +8,7 @@ productRoutes.get("/all", productController.getAllProduct);
 productRoutes
     .route("/:productId")
     .get(productController.getProduct)
-    .post(productController.updateProduct)
+    .put(productController.updateProduct)
     .delete(productController.deleteProduct);
 
 productRoutes.get(
