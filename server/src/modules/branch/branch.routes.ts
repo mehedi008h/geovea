@@ -8,7 +8,7 @@ branchRoutes.get("/all", branchController.getAllBranch);
 branchRoutes
     .route("/:branchId")
     .get(branchController.getBranch)
-    .put(branchController.updateBranch)
+    .patch(branchController.updateBranch)
     .delete(branchController.deleteBranch);
 
 export default branchRoutes;

@@ -1,5 +1,6 @@
 import mongoose, { Document, Schema, Types } from "mongoose";
 import { Counter } from "./counter.model";
+import { string } from "zod";
 
 interface ILocation {
     latitude: number;
@@ -16,13 +17,13 @@ interface IItem {
 export interface OrderDocument extends Document {
     orderId: string;
     customer: Types.ObjectId;
-    deliveryPartner?: Types.ObjectId;
+    deliveryPartner: Types.ObjectId;
     branch: Types.ObjectId;
     items: IItem[];
     deliveryLocation: ILocation;
     pickupLocation: ILocation;
-    deliveryPersonLocation?: ILocation;
-    status: "available" | "confirmed" | "arriving" | "delivered" | "cancelled";
+    deliveryPersonLocation: ILocation;
+    status: "avaliable" | "confirmed" | "arriving" | "delivered" | "cancelled";
     totalPrice: number;
     createdAt: Date;
     updatedAt: Date;
@@ -82,13 +83,13 @@ const orderSchema = new Schema<OrderDocument>(
         status: {
             type: String,
             enum: [
-                "available",
+                "avaliable",
                 "confirmed",
                 "arriving",
                 "delivered",
                 "cancelled",
             ],
-            default: "available",
+            default: "avaliable",
         },
         totalPrice: { type: Number, required: true },
         createdAt: { type: Date, default: Date.now },

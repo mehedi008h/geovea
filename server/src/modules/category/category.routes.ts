@@ -8,7 +8,7 @@ categoryRoutes.get("/all", categoryController.getAllCategory);
 categoryRoutes
     .route("/:categoryId")
     .get(categoryController.getCategory)
-    .put(categoryController.updateCategory)
+    .patch(categoryController.updateCategory)
     .delete(categoryController.deleteCategory);
 
 export default categoryRoutes;

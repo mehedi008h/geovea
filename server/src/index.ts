@@ -12,6 +12,7 @@ import authRoutes from "./modules/auth/auth.routes";
 import categoryRoutes from "./modules/category/category.routes";
 import productRoutes from "./modules/product/product.routes";
 import branchRoutes from "./modules/branch/branch.routes";
+import orderRoutes from "./modules/order/order.routes";
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
@@ -41,6 +42,7 @@ app.use(`${BASE_PATH}/auth`, authRoutes);
 app.use(`${BASE_PATH}/category`, categoryRoutes);
 app.use(`${BASE_PATH}/product`, productRoutes);
 app.use(`${BASE_PATH}/branch`, branchRoutes);
+app.use(`${BASE_PATH}/order`, orderRoutes);
 
 // not found route
 app.all(
