@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { Response, NextFunction } from "express";
 import { ExpressRequest } from "../common/interface/expressRequest.interface";
+import { config } from "../config/app.config";
 
 export const isAuthenticatedUser = async (
     req: ExpressRequest,
@@ -16,10 +17,7 @@ export const isAuthenticatedUser = async (
         }
 
         const token = authHeader.split(" ")[1];
-        const decoded = jwt.verify(
-            token,
-            process.env.ACCESS_TOKEN_SECRET as string
-        );
+        const decoded = jwt.verify(token, config.JWT.SECRET);
 
         req.user = decoded as jwt.JwtPayload; // Assign decoded token to req.user
         next(); // Proceed to the next middleware or route handler

@@ -75,8 +75,8 @@ export class AuthController {
 
     // fetch user information
     public fetchUser = asyncHandler(
-        async (req: Request, res: Response): Promise<any> => {
-            const { userId, role } = req.body;
+        async (req: ExpressRequest, res: Response): Promise<any> => {
+            const { userId, role } = req.user;
 
             const { user } = await this.authService.fetchUserById({
                 userId,
