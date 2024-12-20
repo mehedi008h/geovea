@@ -136,4 +136,40 @@ export class AuthService {
             user,
         };
     }
+
+    // update user
+    public async updateUser(userId: string, updateData: any) {
+        let user =
+            (await Customer.findById(userId)) ||
+            (await DeliveryPartner.findById(userId));
+
+        if (!user) {
+            throw new NotFoundException("User not found");
+        }
+
+        let UserModel;
+
+        if (user.role === "Customer") {
+            UserModel = Customer;
+        } else if (user.role === "DeliveryPartner") {
+            UserModel = DeliveryPartner;
+        } else {
+            throw new UnauthorizedException("Invalid user role");
+        }
+
+        // update user data
+        const updatedUser = await UserModel.findByIdAndUpdate(
+            userId,
+            { $set: updateData },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedUser) {
+            throw new NotFoundException("User not found");
+        }
+
+        return {
+            user,
+        };
+    }
 }

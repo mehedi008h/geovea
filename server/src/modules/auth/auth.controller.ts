@@ -7,6 +7,7 @@ import {
 } from "../../common/validators/auth.validator";
 import { UnauthorizedException } from "../../common/utils/catch-errors";
 import { asyncHandler } from "../../middlewares/asyncHandler";
+import { ExpressRequest } from "../../common/interface/expressRequest.interface";
 
 export class AuthController {
     private authService: AuthService;
@@ -84,6 +85,23 @@ export class AuthController {
 
             return res.status(HTTPSTATUS.OK).json({
                 message: "User fetched successfully",
+                user,
+            });
+        }
+    );
+
+    // update user
+    public updateUser = asyncHandler(
+        async (req: ExpressRequest, res: Response): Promise<any> => {
+            const { userId } = req.user;
+
+            const { user } = await this.authService.updateUser(
+                userId,
+                req.body
+            );
+
+            return res.status(HTTPSTATUS.OK).json({
+                message: "User updated successfully",
                 user,
             });
         }
