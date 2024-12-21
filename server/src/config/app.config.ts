@@ -14,6 +14,10 @@ const appConfig = () => ({
     },
     MAILER_SENDER: getEnv("MAILER_SENDER"),
     RESEND_API_KEY: getEnv("RESEND_API_KEY"),
+    ADMIN: {
+        USERNAME: getEnv("ADMIN_USERNAME"),
+        PASSWORD: getEnv("ADMIN_PASSWORD"),
+    },
 });
 
 export const config = appConfig();

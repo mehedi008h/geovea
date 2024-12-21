@@ -3,7 +3,8 @@ import { HTTPSTATUS } from "../../config/http.config";
 import { AuthService } from "./auth.service";
 import {
     customerLoginSchema,
-    deliveryPartnerSchema,
+    loginSchema,
+    registerSchema,
 } from "../../common/validators/auth.validator";
 import { UnauthorizedException } from "../../common/utils/catch-errors";
 import { asyncHandler } from "../../middlewares/asyncHandler";
@@ -38,7 +39,7 @@ export class AuthController {
     public loginDeliveryPartner = asyncHandler(
         async (req: Request, res: Response): Promise<any> => {
             // validate request body
-            const body = deliveryPartnerSchema.parse(req.body);
+            const body = loginSchema.parse(req.body);
 
             const { deliveryPartner, accessToken, refreshToken } =
                 await this.authService.deliveryPartnerLogin(body);
@@ -48,6 +49,40 @@ export class AuthController {
                 deliveryPartner,
                 accessToken,
                 refreshToken,
+            });
+        }
+    );
+
+    // login admin
+    public loginAdmin = asyncHandler(
+        async (req: Request, res: Response): Promise<any> => {
+            // validate request body
+            const body = loginSchema.parse(req.body);
+
+            const { admin, accessToken, refreshToken } =
+                await this.authService.adminLogin(body);
+
+            return res.status(HTTPSTATUS.CREATED).json({
+                message: "Admin Login successfully",
+                admin,
+                accessToken,
+                refreshToken,
+            });
+        }
+    );
+
+    // register delivery partner
+    public registerDeliveryPartner = asyncHandler(
+        async (req: Request, res: Response): Promise<any> => {
+            // validate request body
+            const body = registerSchema.parse(req.body);
+
+            const { deliveryPartner } =
+                await this.authService.deliveryPartnerRegister(body);
+
+            return res.status(HTTPSTATUS.CREATED).json({
+                message: "Delivery Partner Added successfully",
+                deliveryPartner,
             });
         }
     );

@@ -1,7 +1,8 @@
 import { ErrorCode } from "../../common/enums/error-code.enum";
 import {
-    DeliveryPartnerLoginDto,
+    LoginDto,
     FetchUserDto,
+    RegisterDto,
 } from "../../common/interface/auth.interface";
 import {
     BadRequestException,
@@ -10,7 +11,8 @@ import {
 } from "../../common/utils/catch-errors";
 import { generateToken, verifyJwtToken } from "../../common/utils/jwt";
 import { logger } from "../../common/utils/logger";
-import { Customer, DeliveryPartner } from "../../database/models";
+import { config } from "../../config/app.config";
+import { Admin, Customer, DeliveryPartner } from "../../database/models";
 
 export class AuthService {
     // customer login
@@ -43,10 +45,38 @@ export class AuthService {
         };
     }
 
+    // delivery pertner register
+    public async deliveryPartnerRegister(deliveryPartnerDto: RegisterDto) {
+        logger.info(
+            `Delivery Partner Register attempt for email: ${deliveryPartnerDto.email}`
+        );
+
+        // find delivery partner
+        let deliveryPartner = await DeliveryPartner.findOne({
+            email: deliveryPartnerDto.email,
+        });
+
+        // create delivery partner
+        if (deliveryPartner) {
+            throw new BadRequestException("Email already exists");
+        }
+
+        deliveryPartner = new DeliveryPartner({
+            email: deliveryPartnerDto.email,
+            password: deliveryPartnerDto.password,
+            phone: deliveryPartnerDto.phone,
+            role: "DeliveryPartner",
+        });
+
+        await deliveryPartner.save();
+
+        return {
+            deliveryPartner,
+        };
+    }
+
     // delivery partner login
-    public async deliveryPartnerLogin(
-        deliveryPartnerDto: DeliveryPartnerLoginDto
-    ) {
+    public async deliveryPartnerLogin(deliveryPartnerDto: LoginDto) {
         const { email, password } = deliveryPartnerDto;
         logger.info(`Customer Login attempt for email: ${email}`);
 
@@ -86,6 +116,47 @@ export class AuthService {
         };
     }
 
+    // admin login
+    public async adminLogin(adminDto: LoginDto) {
+        const { email, password } = adminDto;
+
+        // find admin
+        const admin = await Admin.findOne({
+            email: email,
+        });
+
+        // throw error if delivery partner not found
+        if (!admin) {
+            logger.warn(`Login failed: User with email ${email} not found`);
+            throw new BadRequestException(
+                "Invalid email or password provided",
+                ErrorCode.AUTH_USER_NOT_FOUND
+            );
+        }
+
+        // check valid password
+        const isPasswordValid =
+            email === config.ADMIN.USERNAME &&
+            password === config.ADMIN.PASSWORD;
+        if (!isPasswordValid) {
+            logger.warn(`Login failed: Invalid password for email: ${email}`);
+            throw new BadRequestException(
+                "Invalid email or password provided",
+                ErrorCode.AUTH_USER_NOT_FOUND
+            );
+        }
+
+        // generate tokens
+        const { accessToken, refreshToken } = generateToken(admin);
+
+        logger.info(`Login successful for delivery partner ID: ${admin._id}`);
+        return {
+            admin,
+            accessToken,
+            refreshToken,
+        };
+    }
+
     // get refresh token
     public async getRefreshToken(token: string) {
         logger.info(`Refresh Token: ${token}`);
@@ -98,6 +169,8 @@ export class AuthService {
             user = await Customer.findById(decoded.userId);
         } else if (decoded.role === "DeliveryPartner") {
             user = await DeliveryPartner.findById(decoded.userId);
+        } else if (decoded.role === "Admin") {
+            user = await Admin.findById(decoded.userId);
         } else {
             throw new UnauthorizedException("Invalid token role");
         }
@@ -115,7 +188,7 @@ export class AuthService {
         };
     }
 
-    // gfetch user
+    // fetch user
     public async fetchUserById(userData: FetchUserDto) {
         logger.info(`User ID: ${userData.userId}`);
 
@@ -124,6 +197,8 @@ export class AuthService {
             user = await Customer.findById(userData.userId);
         } else if (userData.role === "DeliveryPartner") {
             user = await DeliveryPartner.findById(userData.userId);
+        } else if (userData.role === "Admin") {
+            user = await Admin.findById(userData.userId);
         } else {
             throw new UnauthorizedException("Invalid token role");
         }

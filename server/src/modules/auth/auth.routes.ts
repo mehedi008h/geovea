@@ -6,6 +6,8 @@ const authRoutes = Router();
 
 authRoutes.post("/customer/login", authController.loginCustomer);
 authRoutes.post("/delivery/login", authController.loginDeliveryPartner);
+authRoutes.post("/delivery/register", authController.registerDeliveryPartner);
+authRoutes.post("/admin/login", authController.loginAdmin);
 authRoutes.post("/refresh-token", authController.refreshToken);
 authRoutes
     .route("/")

@@ -2,9 +2,13 @@ export interface CustomerLoginDto {
     phone: string;
 }
 
-export interface DeliveryPartnerLoginDto {
+export interface LoginDto {
     email: string;
     password: string;
+}
+
+export interface RegisterDto extends LoginDto {
+    phone: string;
 }
 
 export interface FetchUserDto {

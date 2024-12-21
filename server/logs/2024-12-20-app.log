@@ -11,3 +11,20 @@
 2024-12-20 10:54:48 [INFO]: Customer Login attempt for phone: 01990636964
 2024-12-20 10:54:48 [INFO]: Login successful for customer ID: 6764f3f4b7f2fd86f3f56afa
 2024-12-20 10:58:42 [INFO]: User ID: 6764f3f4b7f2fd86f3f56afa
+2024-12-20 13:59:33 [INFO]: Customer Login attempt for phone: 01990636964
+2024-12-20 13:59:34 [INFO]: Login successful for customer ID: 6764f3f4b7f2fd86f3f56afa
+2024-12-20 13:59:51 [INFO]: User ID: 6764f3f4b7f2fd86f3f56afa
+2024-12-20 14:02:42 [INFO]: Customer Login attempt for phone: 01825564162
+2024-12-20 14:02:43 [INFO]: Login successful for customer ID: 676524a2a137b5bfd62e09ce
+2024-12-20 14:10:19 [INFO]: Customer Login attempt for phone: 01825564162
+2024-12-20 14:10:20 [INFO]: Login successful for customer ID: 676524a2a137b5bfd62e09ce
+2024-12-20 14:16:49 [INFO]: User ID: 6764f3f4b7f2fd86f3f56afa
+2024-12-20 14:19:43 [INFO]: User ID: 6764f3f4b7f2fd86f3f56afa
+2024-12-20 14:28:04 [INFO]: User ID: 6764f3f4b7f2fd86f3f56afa
+2024-12-20 14:28:10 [INFO]: Customer Login attempt for phone: 01825564162
+2024-12-20 14:28:10 [INFO]: Login successful for customer ID: 676524a2a137b5bfd62e09ce
+2024-12-20 14:28:52 [INFO]: User ID: 676524a2a137b5bfd62e09ce
+2024-12-20 14:29:25 [INFO]: User ID: 676524a2a137b5bfd62e09ce
+2024-12-20 14:30:00 [INFO]: Refresh Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzY1MjRhMmExMzdiNWJmZDYyZTA5Y2UiLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MzQ2ODMyOTAsImV4cCI6MTczNDc2OTY5MH0.xq4PEqcPRtNh5Xim9NuMda--JD69aeMiymk6lSNTR38
+2024-12-20 14:30:41 [INFO]: Customer Login attempt for phone: 01825564162
+2024-12-20 14:30:41 [INFO]: Login successful for customer ID: 676524a2a137b5bfd62e09ce
