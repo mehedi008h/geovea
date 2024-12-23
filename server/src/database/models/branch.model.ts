@@ -7,7 +7,7 @@ export interface BranchDocument extends Document {
         longitude: number;
     };
     address: string;
-    deliveryPartners: string;
+    deliveryPartners: string[];
     createdAt: Date;
     updatedAt: Date;
 }

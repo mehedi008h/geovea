@@ -17,19 +17,10 @@ export class ProductService {
             throw new NotFoundException("Category not found");
         }
 
-        let imagesLinks = [];
-
-        for (let i = 0; i < productData.images.length; i++) {
-            imagesLinks.push({
-                public_id: "",
-                url: "",
-            });
-        }
-
         // create new product
         const product = new Product({
             name: productData.name,
-            images: imagesLinks,
+            images: productData.images,
             price: productData.price,
             discountPrice: productData.discountPrice || 0, // Default to 0 if no discount
             quantity: productData.quantity || 0, // Default to 0 if no quantity

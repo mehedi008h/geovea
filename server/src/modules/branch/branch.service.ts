@@ -16,6 +16,7 @@ export class BranchService {
                 longitude: branchData.location.longitude,
             },
             address: branchData.address,
+            deliveryPartners: branchData.deliveryPartners,
         });
 
         await branch.save();
@@ -76,7 +77,7 @@ export class BranchService {
                 latitude: branchData.location.latitude,
                 longitude: branchData.location.longitude,
             }),
-            (branch.deliveryPartners = branchData.deliveryPartners || "");
+            (branch.deliveryPartners = branchData.deliveryPartners);
         await branch.save();
 
         logger.info(`Branch update successfully : ${branch._id}`);

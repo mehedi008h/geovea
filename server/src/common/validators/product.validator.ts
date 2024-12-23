@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import { z } from "zod";
+import { string, z } from "zod";
 
 // image schema
-export const imageSchema = z.object({
-    public_id: z.string().trim(),
-    url: z.string().url().trim(),
+const imageSchema = z.object({
+    public_id: z.string().nonempty("public_id is required"), // Ensures it's a non-empty string
+    url: z.string().url("Invalid URL format").nonempty("URL is required"), // Ensures it's a valid URL
 });
 
 // category schema
@@ -33,9 +33,9 @@ export const branchSchema = z.object({
         longitude: z.number(),
     }),
     address: z.string(),
-    deliveryPartners: z
-        .string()
-        .refine((val) => mongoose.Types.ObjectId.isValid(val), {
+    deliveryPartners: z.array(
+        string().refine((val) => mongoose.Types.ObjectId.isValid(val), {
             message: "Invalid Delivery Partner ID",
-        }),
+        })
+    ),
 });

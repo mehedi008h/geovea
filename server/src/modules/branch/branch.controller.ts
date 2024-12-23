@@ -78,7 +78,7 @@ export class BranchController {
 
             // return success response
             return res.status(HTTPSTATUS.CREATED).json({
-                message: "Update Branch successfully",
+                message: "Delete Branch successfully",
             });
         }
     );

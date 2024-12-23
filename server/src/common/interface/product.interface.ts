@@ -27,5 +27,5 @@ export interface BranchDto {
         longitude: number;
     };
     address: string;
-    deliveryPartners: string;
+    deliveryPartners: string[];
 }
