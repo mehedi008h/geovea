@@ -1,3 +1,4 @@
+import AdminHeader from "@/components/admin/AdminHeader";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import React from "react";
 
@@ -9,12 +10,16 @@ const AdminLayout = () => {
                 <AdminSidebar />
             </aside>
 
-            <main>
+            <section className="w-full">
+                {/* header  */}
+                <AdminHeader />
                 {/* content  */}
-                <div className="p-8">
+                <main className="p-2">
+                    {/* your page content */}
                     <h1>Admin Dashboard</h1>
-                </div>
-            </main>
+                    <p>Welcome to the admin dashboard</p>
+                </main>
+            </section>
         </div>
     );
 };
