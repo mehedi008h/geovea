@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 // form validation
 const formSchema = z.object({
@@ -24,6 +25,8 @@ const formSchema = z.object({
     }),
 });
 const AdminAuth = () => {
+    const router = useRouter();
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -36,6 +39,7 @@ const AdminAuth = () => {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values);
+        router.push("/admin/dashboard");
     }
     return (
         <div className="p-8 bg-neutral-900 rounded-md shadow xl:w-[500px] lg:w-[500px] md:w-[500px] w-full flex flex-col justify-center items-center">
