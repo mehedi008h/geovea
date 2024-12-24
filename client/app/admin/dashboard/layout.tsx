@@ -2,7 +2,11 @@ import AdminHeader from "@/components/admin/AdminHeader";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import React from "react";
 
-const AdminLayout = () => {
+const AdminLayout = ({
+    children,
+}: Readonly<{
+    children: React.ReactNode;
+}>) => {
     return (
         <div className="w-full h-full bg-neutral-800 text-neutral-200 flex flex-row">
             {/* sidebar  */}
@@ -14,10 +18,9 @@ const AdminLayout = () => {
                 {/* header  */}
                 <AdminHeader />
                 {/* content  */}
-                <main className="p-2">
+                <main className="p-5">
                     {/* your page content */}
-                    <h1>Admin Dashboard</h1>
-                    <p>Welcome to the admin dashboard</p>
+                    {children}
                 </main>
             </section>
         </div>

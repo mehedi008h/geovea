@@ -2,6 +2,7 @@ import React from "react";
 import { RiHomeSmile2Line } from "react-icons/ri";
 import { TbListCheck, TbListDetails } from "react-icons/tb";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import Link from "next/link";
 
 const AdminSidebar = () => {
     return (
@@ -26,12 +27,14 @@ const AdminSidebar = () => {
                             </h5>
                         </div>
 
-                        <div className="hover:bg-neutral-700 py-3 ps-5 rounded-l-full flex flex-row gap-2 items-center cursor-pointer group">
-                            <TbListDetails size={22} />
-                            <h5 className="text-basefont-medium group-hover:text-neutral-50">
-                                Products
-                            </h5>
-                        </div>
+                        <Link href={"/admin/dashboard/product"}>
+                            <div className="hover:bg-neutral-700 py-3 ps-5 rounded-l-full flex flex-row gap-2 items-center cursor-pointer group">
+                                <TbListDetails size={22} />
+                                <h5 className="text-basefont-medium group-hover:text-neutral-50">
+                                    Products
+                                </h5>
+                            </div>
+                        </Link>
 
                         <div className="hover:bg-neutral-700 py-3 ps-5 rounded-l-full flex flex-row gap-2 items-center cursor-pointer group">
                             <TbListCheck size={22} />
