@@ -38,7 +38,7 @@ const AdminAuth = () => {
         console.log(values);
     }
     return (
-        <div className="p-8 bg-neutral-900 rounded-md shadow w-[500px] flex flex-col justify-center items-center">
+        <div className="p-8 bg-neutral-900 rounded-md shadow xl:w-[500px] lg:w-[500px] md:w-[500px] w-full flex flex-col justify-center items-center">
             <SiFusionauth color="white" size={52} className="mb-5" />
 
             <Form {...form}>
