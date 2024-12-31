@@ -6,22 +6,14 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Product } from "@/@types";
 import { categories } from "@/data";
 import Image from "next/image";
 import { IoCheckmarkDoneOutline, IoCloseOutline } from "react-icons/io5";
 import ImageUpload from "@/components/common/ImageUpload";
+import CustomeInput, { VARIENT } from "@/components/common/CustomeInput";
 
 // form validation
 const formSchema = z.object({
@@ -161,172 +153,85 @@ const AddProduct = () => {
     // default form
     let formContent = (
         <>
-            <FormField
-                control={form.control}
+            {/* product name  */}
+            <CustomeInput
                 name="name"
-                render={({ field }) => (
-                    <FormItem>
-                        <FormLabel className="text-neutral-200">
-                            Product Name
-                        </FormLabel>
-                        <FormControl>
-                            <Input
-                                placeholder="Enter product name"
-                                {...field}
-                                className="text-neutral-200 border focus:border-0"
-                            />
-                        </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                )}
-            />
-
-            <FormField
+                label="Product Name"
+                required
+                placeholder="Enter product name"
                 control={form.control}
-                name="description"
-                render={({ field }) => (
-                    <FormItem>
-                        <FormLabel className="text-neutral-200">
-                            Product Description
-                        </FormLabel>
-                        <FormControl>
-                            <Textarea
-                                placeholder="Type your product description."
-                                {...field}
-                                className="text-neutral-200 border focus:border-0"
-                            />
-                        </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                )}
             />
 
-            <div className="flex flex-row gap-3 w-full">
-                <FormField
-                    control={form.control}
-                    name="price"
-                    render={({ field }) => (
-                        <FormItem className="w-full">
-                            <FormLabel className="text-neutral-200">
-                                Product Price
-                            </FormLabel>
-                            <FormControl>
-                                <Input
-                                    placeholder="11"
-                                    type="number"
-                                    {...field}
-                                    className="text-neutral-200 border focus:border-0"
-                                />
-                            </FormControl>
+            {/* product description  */}
+            <CustomeInput
+                name="description"
+                label="Product Description"
+                required
+                placeholder="Type your product description"
+                control={form.control}
+                varient={VARIENT.TEXTAREA}
+            />
 
-                            <FormMessage />
-                        </FormItem>
-                    )}
+            {/* product price & quantity  */}
+            <div className="flex flex-row gap-3 w-full">
+                <CustomeInput
+                    name="price"
+                    label="Product Price"
+                    required
+                    placeholder="Enter product price"
+                    type="number"
+                    control={form.control}
                 />
 
-                <FormField
-                    control={form.control}
+                <CustomeInput
                     name="quantity"
-                    render={({ field }) => (
-                        <FormItem className="w-full">
-                            <FormLabel className="text-neutral-200">
-                                Product Quantity
-                            </FormLabel>
-                            <FormControl>
-                                <Input
-                                    placeholder="1"
-                                    {...field}
-                                    className="text-neutral-200 border focus:border-0"
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
+                    label="Product Quantity"
+                    required
+                    placeholder="Enter product quantity"
+                    control={form.control}
                 />
             </div>
 
-            <FormField
-                control={form.control}
+            <CustomeInput
                 name="category"
-                render={({}) => (
-                    <FormItem>
-                        <FormLabel className="text-neutral-200">
-                            Choose a Category
-                        </FormLabel>
-                        <FormControl>
-                            <div className="w-full h-full flex flex-row flex-wrap justify-around gap-5 overflow-x-hidden overflow-y-scroll">
-                                {categories.map((item, index) => (
-                                    <div
-                                        key={index}
-                                        onClick={() =>
-                                            handleCategory(item.name)
-                                        }
-                                        className="flex justify-center flex-col items-center gap-2"
-                                    >
-                                        <div className="p-3 rounded-full border border-neutral-600 h-[65px] w-[65px] relative cursor-pointer">
-                                            <Image
-                                                src={item.image}
-                                                width={40}
-                                                height={40}
-                                                objectFit="cover"
-                                                className="object-cover "
-                                                alt={item.name || "Category"}
-                                            />
-                                            {category === item.name && (
-                                                <div className="h-[65px] w-[65px] bg-neutral-200 absolute rounded-full top-0 left-0 opacity-85 flex justify-center items-center">
-                                                    <IoCheckmarkDoneOutline
-                                                        size={40}
-                                                        color="green"
-                                                    />
-                                                </div>
-                                            )}
-                                        </div>
-                                        <p className="text-base text-neutral-200 font-semibold">
-                                            {item.name}
-                                        </p>
+                label="Choose a Category"
+                required
+                placeholder="Enter product quantity"
+                control={form.control}
+                varient={VARIENT.CHILDREN}
+            >
+                <div className="w-full h-full flex flex-row flex-wrap justify-around gap-5 overflow-x-hidden overflow-y-scroll">
+                    {categories.map((item, index) => (
+                        <div
+                            key={index}
+                            onClick={() => handleCategory(item.name)}
+                            className="flex justify-center flex-col items-center gap-2"
+                        >
+                            <div className="p-3 rounded-full border border-neutral-400 h-[65px] w-[65px] relative cursor-pointer">
+                                <Image
+                                    src={item.image}
+                                    width={40}
+                                    height={40}
+                                    objectFit="cover"
+                                    className="object-cover "
+                                    alt={item.name || "Category"}
+                                />
+                                {category === item.name && (
+                                    <div className="h-[65px] w-[65px] bg-neutral-200 absolute rounded-full top-0 left-0 opacity-85 flex justify-center items-center">
+                                        <IoCheckmarkDoneOutline
+                                            size={40}
+                                            color="green"
+                                        />
                                     </div>
-                                ))}
+                                )}
                             </div>
-                        </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                )}
-            />
-
-            {/* <h3 className="text-neutral-300 font-semibold text-lg mb-5">
-                Choose a Category
-            </h3>
-            <div className="w-full h-full flex flex-row flex-wrap justify-around gap-5 overflow-x-hidden overflow-y-scroll">
-                {categories.map((item, index) => (
-                    <div
-                        key={index}
-                        onClick={() => handleCategory(item.name)}
-                        className="flex justify-center flex-col items-center gap-2"
-                    >
-                        <div className="p-3 rounded-full border border-neutral-600 h-[65px] w-[65px] relative cursor-pointer">
-                            <Image
-                                src={item.image}
-                                width={40}
-                                height={40}
-                                objectFit="cover"
-                                className="object-cover "
-                                alt={item.name || "Category"}
-                            />
-                            {category === item.name && (
-                                <div className="h-[65px] w-[65px] bg-neutral-200 absolute rounded-full top-0 left-0 opacity-85 flex justify-center items-center">
-                                    <IoCheckmarkDoneOutline
-                                        size={40}
-                                        color="green"
-                                    />
-                                </div>
-                            )}
+                            <p className="text-base text-neutral-200 font-semibold">
+                                {item.name}
+                            </p>
                         </div>
-                        <p className="text-base text-neutral-200 font-semibold">
-                            {item.name}
-                        </p>
-                    </div>
-                ))}
-            </div> */}
+                    ))}
+                </div>
+            </CustomeInput>
         </>
     );
 
@@ -334,56 +239,26 @@ const AddProduct = () => {
     if (step === STEPS.IMAGE) {
         formContent = (
             <>
-                <FormField
-                    control={form.control}
+                <CustomeInput
                     name="discountPrice"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel className="text-neutral-200">
-                                Discount Price
-                            </FormLabel>
-                            <FormControl>
-                                <Input
-                                    placeholder="0.0"
-                                    type="number"
-                                    {...field}
-                                    className="text-neutral-200 border focus:border-0"
-                                />
-                            </FormControl>
-
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
+                    label="Discount Price"
+                    placeholder="Enter discount price"
                     control={form.control}
-                    name="stock"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel className="text-neutral-200">
-                                Stock
-                            </FormLabel>
-                            <FormControl>
-                                <Input
-                                    placeholder="1"
-                                    type="number"
-                                    {...field}
-                                    className="text-neutral-200 border focus:border-0"
-                                />
-                            </FormControl>
-
-                            <FormMessage />
-                        </FormItem>
-                    )}
+                    type="number"
                 />
 
-                <h3 className="text-neutral-300 font-semibold text-lg my-5">
-                    Choose Images
-                </h3>
+                <CustomeInput
+                    name="stock"
+                    label="Stock"
+                    placeholder="Enter product stock"
+                    control={form.control}
+                    type="number"
+                />
+
+                <h3 className="text-neutral-200 my-5">Choose Images</h3>
 
                 <ImageUpload uploadAvatar={uploadAvatar} />
-                <div className="flex flex-row flex-wrap justify-evenly gap-3 my-3">
+                <div className="flex flex-row flex-wrap justify-start gap-3 my-3">
                     {imagesPreview &&
                         imagesPreview.map((image, i) => {
                             return (
@@ -416,11 +291,11 @@ const AddProduct = () => {
 
     return (
         <div className="p-5 flex flex-col justify-between h-screen relative">
-            <div className="h-screen overflow-x-scroll pb-16 px-1">
+            <div className="h-screen overflow-x-scroll pb-16 px-1 hide-scroll-bar">
                 <PageHeader title="Create a New Product" subTitle="" />
 
                 <Form {...form}>
-                    <div className="space-y-4 w-full mt-8 ">{formContent}</div>
+                    <div className="space-y-6 w-full mt-8 ">{formContent}</div>
                 </Form>
             </div>
 
