@@ -36,6 +36,15 @@ const AdminSidebar = () => {
                             </div>
                         </Link>
 
+                        <Link href={"/admin/dashboard/category"}>
+                            <div className="hover:bg-neutral-700 py-3 ps-5 rounded-l-full flex flex-row gap-2 items-center cursor-pointer group">
+                                <TbListDetails size={22} />
+                                <h5 className="text-basefont-medium group-hover:text-neutral-50">
+                                    Category
+                                </h5>
+                            </div>
+                        </Link>
+
                         <div className="hover:bg-neutral-700 py-3 ps-5 rounded-l-full flex flex-row gap-2 items-center cursor-pointer group">
                             <TbListCheck size={22} />
                             <h5 className="text-base font-medium group-hover:text-neutral-50">

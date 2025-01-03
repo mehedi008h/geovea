@@ -1,33 +1,33 @@
 "use client";
-import React, { useState } from "react";
+import AddCategory from "@/components/admin/category/AddCategory";
+import Category from "@/components/admin/category/Category";
 import PageHeader from "@/components/admin/PageHeader";
-import Products from "@/components/admin/product/Products";
 import Modal from "@/components/common/Model";
-import AddProduct from "@/components/admin/product/AddProduct";
+import React, { useState } from "react";
 
-const ProductPage = () => {
+const CategoryPage = () => {
     const [open, setOpen] = useState<boolean>(false);
     return (
         <div>
             {/* header  */}
             <PageHeader
-                title="Products"
-                subTitle="Manage your all product"
-                btnText="Add Product"
+                title="Category"
+                subTitle="Manage your all category"
+                btnText="Add Category"
                 onClick={() => setOpen(true)}
             />
 
             {/* product table  */}
-            <Products />
+            <Category />
             <Modal
                 open={open}
                 setOpen={setOpen}
                 className="h-screen w-[30%] bg-neutral-800"
             >
-                <AddProduct />
+                <AddCategory />
             </Modal>
         </div>
     );
 };
 
-export default ProductPage;
+export default CategoryPage;
