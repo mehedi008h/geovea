@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import PageHeader from "../PageHeader";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
@@ -18,8 +18,7 @@ const formSchema = z.object({
 });
 
 const AddCategory = () => {
-    const [imagesPreview, setImagesPreview] = useState<string[]>([]);
-    const [images, setImages] = useState<string[]>([]);
+    const [image, setImage] = useState<string>("");
 
     const form = useForm<Category>({
         resolver: zodResolver(formSchema),
@@ -28,42 +27,6 @@ const AddCategory = () => {
             image: "",
         },
     });
-
-    // upload photo
-    const uploadAvatar = (e: ChangeEvent<HTMLInputElement>): void => {
-        if (!e.target.files) return;
-
-        const files = Array.from(e.target.files);
-        const previews: string[] = [];
-        const imageFiles: string[] = [];
-
-        files.forEach((file) => {
-            const reader = new FileReader();
-
-            reader.onload = () => {
-                if (
-                    reader.readyState === 2 &&
-                    typeof reader.result === "string"
-                ) {
-                    previews.push(reader.result);
-                    imageFiles.push(reader.result);
-
-                    // Update state only after all files are processed
-                    if (previews.length === files.length) {
-                        setImagesPreview(previews);
-                        setImages(imageFiles);
-                        setCustomValue("images", imageFiles);
-                    }
-                }
-            };
-
-            reader.onerror = (err) => {
-                console.error("Error reading file:", err);
-            };
-
-            reader.readAsDataURL(file);
-        });
-    };
 
     // form custome fields
     const setCustomValue = (id: any, value: any) => {
@@ -102,7 +65,15 @@ const AddCategory = () => {
 
                         <h3 className="text-neutral-200 my-5">Choose Images</h3>
 
-                        <ImageUpload uploadAvatar={uploadAvatar} />
+                        <div className="w-full flex justify-center">
+                            <ImageUpload
+                                id="image"
+                                setCustomValue={setCustomValue}
+                                setData={setImage}
+                                show
+                                className="h-[200px] w-[200px] rounded-full"
+                            />
+                        </div>
                     </div>
                 </Form>
             </div>

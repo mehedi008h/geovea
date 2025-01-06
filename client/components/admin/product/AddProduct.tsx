@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import PageHeader from "../PageHeader";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
@@ -38,7 +38,7 @@ const AddProduct = () => {
     const [step, setStep] = useState<STEPS>(STEPS.INFO);
     const [category, setCategory] = useState<string>("");
     const [imagesPreview, setImagesPreview] = useState<string[]>([]);
-    const [images, setImages] = useState<string[]>([]);
+    const [image, setImage] = useState<string>("");
     const router = useRouter();
 
     const form = useForm<Product>({
@@ -61,47 +61,11 @@ const AddProduct = () => {
         setCustomValue("category", item);
     };
 
-    // upload photo
-    const uploadAvatar = (e: ChangeEvent<HTMLInputElement>): void => {
-        if (!e.target.files) return;
-
-        const files = Array.from(e.target.files);
-        const previews: string[] = [];
-        const imageFiles: string[] = [];
-
-        files.forEach((file) => {
-            const reader = new FileReader();
-
-            reader.onload = () => {
-                if (
-                    reader.readyState === 2 &&
-                    typeof reader.result === "string"
-                ) {
-                    previews.push(reader.result);
-                    imageFiles.push(reader.result);
-
-                    // Update state only after all files are processed
-                    if (previews.length === files.length) {
-                        setImagesPreview(previews);
-                        setImages(imageFiles);
-                        setCustomValue("images", imageFiles);
-                    }
-                }
-            };
-
-            reader.onerror = (err) => {
-                console.error("Error reading file:", err);
-            };
-
-            reader.readAsDataURL(file);
-        });
-    };
-
-    const removeImage = (index: number): void => {
-        // Filter out the image at the specified index
-        setImagesPreview((prev) => prev.filter((_, i) => i !== index));
-        setImages((prev) => prev.filter((_, i) => i !== index));
-    };
+    // const removeImage = (index: number): void => {
+    //     // Filter out the image at the specified index
+    //     setImagesPreview((prev) => prev.filter((_, i) => i !== index));
+    //     setImages((prev) => prev.filter((_, i) => i !== index));
+    // };
 
     // form submit function
     function onSubmit(values: z.infer<typeof formSchema>) {
@@ -257,7 +221,10 @@ const AddProduct = () => {
 
                 <h3 className="text-neutral-200 my-5">Choose Images</h3>
 
-                <ImageUpload uploadAvatar={uploadAvatar} />
+                <ImageUpload
+                    setCustomValue={setCustomValue}
+                    setData={setImage}
+                />
                 <div className="flex flex-row flex-wrap justify-start gap-3 my-3">
                     {imagesPreview &&
                         imagesPreview.map((image, i) => {
@@ -275,11 +242,7 @@ const AddProduct = () => {
                                         alt="Product Image"
                                     />
                                     <div className="h-[20px] w-[20px] bg-neutral-200 absolute rounded-full -top-1 -right-1 opacity-85 justify-center items-center hidden group-hover:flex">
-                                        <IoCloseOutline
-                                            onClick={() => removeImage(i)}
-                                            size={20}
-                                            color="red"
-                                        />
+                                        <IoCloseOutline size={20} color="red" />
                                     </div>
                                 </div>
                             );
