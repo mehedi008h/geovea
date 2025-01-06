@@ -37,8 +37,7 @@ enum STEPS {
 const AddProduct = () => {
     const [step, setStep] = useState<STEPS>(STEPS.INFO);
     const [category, setCategory] = useState<string>("");
-    const [imagesPreview, setImagesPreview] = useState<string[]>([]);
-    const [image, setImage] = useState<string>("");
+    const [images, setImages] = useState<string[]>([]);
     const router = useRouter();
 
     const form = useForm<Product>({
@@ -61,11 +60,17 @@ const AddProduct = () => {
         setCustomValue("category", item);
     };
 
-    // const removeImage = (index: number): void => {
-    //     // Filter out the image at the specified index
-    //     setImagesPreview((prev) => prev.filter((_, i) => i !== index));
-    //     setImages((prev) => prev.filter((_, i) => i !== index));
-    // };
+    // handle images
+    const handleImages = (item: string) => {
+        setImages((prev) => [...prev, item]);
+        setCustomValue("images", [...images, item]);
+    };
+
+    // remove image
+    const removeImage = (index: number): void => {
+        setImages((prev) => prev.filter((_, i) => i !== index));
+        setCustomValue("images", [...images.filter((_, i) => i !== index)]);
+    };
 
     // form submit function
     function onSubmit(values: z.infer<typeof formSchema>) {
@@ -75,8 +80,8 @@ const AddProduct = () => {
         if (step !== STEPS.IMAGE) {
             return onNext();
         }
-        console.log(values);
-        router.push("/admin/dashboard");
+        console.log("Data: ", values);
+        // router.push("/admin/dashboard");
     }
 
     // next , prev button
@@ -221,32 +226,35 @@ const AddProduct = () => {
 
                 <h3 className="text-neutral-200 my-5">Choose Images</h3>
 
-                <ImageUpload
-                    setCustomValue={setCustomValue}
-                    setData={setImage}
-                />
                 <div className="flex flex-row flex-wrap justify-start gap-3 my-3">
-                    {imagesPreview &&
-                        imagesPreview.map((image, i) => {
+                    {images &&
+                        images.map((image, i) => {
                             return (
                                 <div
                                     key={i}
-                                    className="w-20 h-20 relative cursor-pointer group transition-all"
+                                    className="w-[200px] h-[200px] border border-dashed border-neutral-600 rounded-md relative cursor-pointer group transition-all"
                                 >
                                     <Image
                                         src={image}
-                                        width={80}
-                                        height={80}
-                                        objectFit="cover"
-                                        className="w-full h-full rounded-md object-cover shadow-md"
+                                        width={100}
+                                        height={100}
+                                        className="w-[200px] h-[200px] rounded-md object-contain"
                                         alt="Product Image"
                                     />
-                                    <div className="h-[20px] w-[20px] bg-neutral-200 absolute rounded-full -top-1 -right-1 opacity-85 justify-center items-center hidden group-hover:flex">
+                                    <div
+                                        onClick={() => removeImage(i)}
+                                        className="h-[20px] w-[20px] bg-neutral-200 absolute rounded-full -top-1 -right-1 opacity-85 justify-center items-center hidden group-hover:flex"
+                                    >
                                         <IoCloseOutline size={20} color="red" />
                                     </div>
                                 </div>
                             );
                         })}
+                    <ImageUpload
+                        setCustomValue={setCustomValue}
+                        setData={handleImages}
+                        className="w-[200px] h-[200px] rounded-md"
+                    />
                 </div>
             </>
         );
@@ -255,7 +263,10 @@ const AddProduct = () => {
     return (
         <div className="p-5 flex flex-col justify-between h-screen relative">
             <div className="h-screen overflow-x-scroll pb-16 px-1 hide-scroll-bar">
-                <PageHeader title="Create a New Product" subTitle="" />
+                <PageHeader
+                    title="Create a New Product"
+                    subTitle="Please fill up required information"
+                />
 
                 <Form {...form}>
                     <div className="space-y-6 w-full mt-8 ">{formContent}</div>

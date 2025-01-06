@@ -98,7 +98,7 @@ const ImageUpload = forwardRef<HTMLDivElement, Props>(
                         <div
                             ref={ref}
                             className={cn(
-                                "border border-dashed border-neutral-600 p-5 flex flex-col justify-center items-center gap-3 cursor-pointer relative mt-2",
+                                "border border-dashed border-neutral-600 p-5 flex flex-col justify-center items-center gap-3 cursor-pointer relative",
                                 className
                             )}
                             {...props}
@@ -110,7 +110,7 @@ const ImageUpload = forwardRef<HTMLDivElement, Props>(
                                 onChange={uploadImage}
                                 className="hidden"
                             />
-                            <TbPhotoPlus size={50} color="#737373" />
+                            <TbPhotoPlus size={30} color="#737373" />
                             <h3 className="text-base text-neutral-500 font-semibold">
                                 Click to upload
                             </h3>
