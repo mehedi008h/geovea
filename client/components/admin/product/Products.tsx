@@ -11,6 +11,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import CustomeTable from "@/components/common/CustomeTable";
 import { Badge } from "@/components/ui/badge";
 import Modal from "@/components/common/Model";
+import Dialog from "@/components/common/Dialog";
+import { IoAlertCircleOutline } from "react-icons/io5";
 
 const data: Product[] = [
     {
@@ -47,6 +49,7 @@ enum TYPE {
 
 export const Products = () => {
     const [open, setOpen] = useState<boolean>(false);
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
     const [modalType, setModalType] = useState<TYPE>(TYPE.VIEW);
 
     const columns: ColumnDef<Product>[] = [
@@ -154,6 +157,7 @@ export const Products = () => {
                             <CiEdit />
                         </Button>
                         <Button
+                            onClick={() => setOpenDialog(true)}
                             size="icon"
                             className="bg-red-500 hover:bg-red-600 text-white"
                         >
@@ -189,6 +193,31 @@ export const Products = () => {
                 {modalType === TYPE.VIEW && <div>View</div>}
                 {modalType === TYPE.EDIT && <div>Edit</div>}
             </Modal>
+            <Dialog
+                open={openDialog}
+                setOpen={setOpenDialog}
+                className="h-fit bg-neutral-800 text-center p-5 flex flex-col justify-center items-center"
+            >
+                <IoAlertCircleOutline size={60} className="text-red-500" />
+                <p className="mt-2">Are you sure?</p>
+                <div className="flex items-center gap-3 mt-5 w-full">
+                    <Button
+                        className="w-full"
+                        onClick={() => {
+                            setOpenDialog(false);
+                            setOpen(false);
+                        }}
+                    >
+                        Cancle
+                    </Button>
+                    <Button
+                        className="w-full bg-red-500 hover:bg-red-600"
+                        onClick={() => setOpenDialog(false)}
+                    >
+                        Delete
+                    </Button>
+                </div>
+            </Dialog>
         </div>
     );
 };
