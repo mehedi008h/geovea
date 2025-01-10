@@ -13,6 +13,8 @@ import { Badge } from "@/components/ui/badge";
 import Modal from "@/components/common/Model";
 import Dialog from "@/components/common/Dialog";
 import { IoAlertCircleOutline } from "react-icons/io5";
+import UpdateProduct from "./UpdateProduct";
+import ProductDetails from "./ProductDetails";
 
 const data: Product[] = [
     {
@@ -190,8 +192,8 @@ export const Products = () => {
                 className="h-screen w-[30%] bg-neutral-800"
                 title={`Product Details - ${modalType}`}
             >
-                {modalType === TYPE.VIEW && <div>View</div>}
-                {modalType === TYPE.EDIT && <div>Edit</div>}
+                {modalType === TYPE.VIEW && <ProductDetails />}
+                {modalType === TYPE.EDIT && <UpdateProduct />}
             </Modal>
             <Dialog
                 open={openDialog}
