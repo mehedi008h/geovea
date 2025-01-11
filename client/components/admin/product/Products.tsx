@@ -23,6 +23,7 @@ const data: Product[] = [
         category: "Category",
         price: 19.99,
         stock: 100,
+        sold: 500,
         image: "/images/product1.jpg",
     },
     {
@@ -31,6 +32,7 @@ const data: Product[] = [
         category: "Category",
         price: 19.99,
         stock: 4,
+        sold: 500,
         image: "/images/product1.jpg",
     },
 ];
@@ -41,6 +43,7 @@ export type Product = {
     name: string;
     category: string;
     price: number;
+    sold: number;
     stock: number;
 };
 
@@ -116,6 +119,11 @@ export const Products = () => {
             cell: ({ row }) => (
                 <Badge variant="destructive">{row.getValue("category")}</Badge>
             ),
+        },
+        {
+            accessorKey: "sold",
+            header: "Sold",
+            cell: ({ row }) => <p>{row.getValue("sold")}</p>,
         },
         {
             accessorKey: "stock",

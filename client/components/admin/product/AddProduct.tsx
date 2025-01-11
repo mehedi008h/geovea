@@ -194,7 +194,7 @@ const AddProduct = () => {
                                     </div>
                                 )}
                             </div>
-                            <p className="text-base text-neutral-200 font-semibold">
+                            <p className="text-sm text-neutral-400 font-normal">
                                 {item.name}
                             </p>
                         </div>

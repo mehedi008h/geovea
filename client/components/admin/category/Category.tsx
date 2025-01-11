@@ -1,171 +1,186 @@
 "use client";
 
-import * as React from "react";
+import React, { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import CustomeTable from "@/components/common/CustomeTable";
+import { FaRegEye } from "react-icons/fa6";
+import { CiEdit } from "react-icons/ci";
+import { AiOutlineDelete } from "react-icons/ai";
+import Modal from "@/components/common/Model";
+import Dialog from "@/components/common/Dialog";
+import { IoAlertCircleOutline } from "react-icons/io5";
+import CategoryDetails from "./CategoryDetails";
+import UpdateCategory from "./UpdateCategory";
 
-const data: Payment[] = [
+const data: Category[] = [
     {
-        id: "m5gr84i9",
-        amount: 316,
-        status: "success",
-        email: "ken99@yahoo.com",
+        _id: "m5gr84i9",
+        slug: "m5gr84i9",
+        image: "df",
+        name: "Mens Fashions",
     },
     {
-        id: "3u1reuv4",
-        amount: 242,
-        status: "success",
-        email: "Abe45@gmail.com",
+        _id: "m5gr84i9",
+        slug: "m5gr84i9",
+        image: "df",
+        name: "success",
     },
     {
-        id: "derv1ws0",
-        amount: 837,
-        status: "processing",
-        email: "Monserrat44@gmail.com",
-    },
-    {
-        id: "5kma53ae",
-        amount: 874,
-        status: "success",
-        email: "Silas22@gmail.com",
-    },
-    {
-        id: "bhqecj4p",
-        amount: 721,
-        status: "failed",
-        email: "carmella@hotmail.com",
+        _id: "m5gr84i9",
+        slug: "m5gr84i9",
+        image: "df",
+        name: "success",
     },
 ];
 
-export type Payment = {
-    id: string;
-    amount: number;
-    status: "pending" | "processing" | "success" | "failed";
-    email: string;
+export type Category = {
+    _id: string;
+    slug: string;
+    image: string;
+    name: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
-    {
-        id: "select",
-        header: ({ table }) => (
-            <Checkbox
-                checked={
-                    table.getIsAllPageRowsSelected() ||
-                    (table.getIsSomePageRowsSelected() && "indeterminate")
-                }
-                onCheckedChange={(value) =>
-                    table.toggleAllPageRowsSelected(!!value)
-                }
-                aria-label="Select all"
-            />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Select row"
-            />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-    },
-    {
-        accessorKey: "status",
-        header: "Status",
-        cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("status")}</div>
-        ),
-    },
-    {
-        accessorKey: "email",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === "asc")
-                    }
-                >
-                    Email
-                    <ArrowUpDown />
-                </Button>
-            );
-        },
-        cell: ({ row }) => (
-            <div className="lowercase">{row.getValue("email")}</div>
-        ),
-    },
-    {
-        accessorKey: "amount",
-        header: () => <div className="text-right">Amount</div>,
-        cell: ({ row }) => {
-            const amount = parseFloat(row.getValue("amount"));
-
-            // Format the amount as a dollar amount
-            const formatted = new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-            }).format(amount);
-
-            return <div className="text-right font-medium">{formatted}</div>;
-        },
-    },
-    {
-        id: "actions",
-        enableHiding: false,
-        cell: ({ row }) => {
-            const payment = row.original;
-
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() =>
-                                navigator.clipboard.writeText(payment.id)
-                            }
-                        >
-                            Copy payment ID
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>View customer</DropdownMenuItem>
-                        <DropdownMenuItem>
-                            View payment details
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            );
-        },
-    },
-];
+enum TYPE {
+    VIEW = "view",
+    EDIT = "edit",
+}
 
 const Category = () => {
+    const [open, setOpen] = useState<boolean>(false);
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
+    const [modalType, setModalType] = useState<TYPE>(TYPE.VIEW);
+
+    const columns: ColumnDef<Category>[] = [
+        {
+            id: "select",
+            header: ({ table }) => (
+                <Checkbox
+                    checked={
+                        table.getIsAllPageRowsSelected() ||
+                        (table.getIsSomePageRowsSelected() && "indeterminate")
+                    }
+                    onCheckedChange={(value) =>
+                        table.toggleAllPageRowsSelected(!!value)
+                    }
+                    aria-label="Select all"
+                />
+            ),
+            cell: ({ row }) => (
+                <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+            ),
+            enableSorting: false,
+            enableHiding: false,
+        },
+        {
+            accessorKey: "image",
+            header: "Image",
+            cell: ({ row }) => (
+                <div className="h-12 w-12 rounded-md bg-neutral-200"></div>
+            ),
+        },
+        {
+            accessorKey: "slug",
+            header: "Slug",
+            cell: ({ row }) => (
+                <div className="capitalize">{row.getValue("slug")}</div>
+            ),
+        },
+        {
+            accessorKey: "name",
+            header: "Name",
+            cell: ({ row }) => (
+                <div className="capitalize">{row.getValue("name")}</div>
+            ),
+        },
+        {
+            id: "actions",
+            header: "Actions",
+            enableHiding: false,
+            cell: ({ row }) => {
+                return (
+                    <div className="flex gap-2">
+                        <Button
+                            onClick={() => handleModal(TYPE.VIEW)}
+                            size="icon"
+                            className="bg-blue-500 hover:bg-blue-600 text-white"
+                        >
+                            <FaRegEye />
+                        </Button>
+                        <Button
+                            onClick={() => handleModal(TYPE.EDIT)}
+                            size="icon"
+                            className="bg-orange-500 hover:bg-orange-600 text-white"
+                        >
+                            <CiEdit />
+                        </Button>
+                        <Button
+                            onClick={() => setOpenDialog(true)}
+                            size="icon"
+                            className="bg-red-500 hover:bg-red-600 text-white"
+                        >
+                            <AiOutlineDelete />
+                        </Button>
+                    </div>
+                );
+            },
+        },
+    ];
+
+    // handle modal
+    const handleModal = (type: TYPE) => {
+        setModalType(type);
+        setOpen(true);
+    };
     return (
         <div>
-            <CustomeTable<Payment>
+            <CustomeTable<Category>
                 data={data}
                 columns={columns}
-                searchBy="email"
-                searchPalceholder="Search by email"
+                searchBy="name"
+                searchPalceholder="Search by name"
             />
+
+            <Modal
+                open={open}
+                setOpen={setOpen}
+                className="h-screen w-[30%] bg-neutral-800"
+                title={`Product Details - ${modalType}`}
+            >
+                {modalType === TYPE.VIEW && <CategoryDetails />}
+                {modalType === TYPE.EDIT && <UpdateCategory />}
+            </Modal>
+            <Dialog
+                open={openDialog}
+                setOpen={setOpenDialog}
+                className="h-fit bg-neutral-800 text-center p-5 flex flex-col justify-center items-center"
+            >
+                <IoAlertCircleOutline size={60} className="text-red-500" />
+                <p className="mt-2">Are you sure?</p>
+                <div className="flex items-center gap-3 mt-5 w-full">
+                    <Button
+                        className="w-full"
+                        onClick={() => {
+                            setOpenDialog(false);
+                            setOpen(false);
+                        }}
+                    >
+                        Cancle
+                    </Button>
+                    <Button
+                        className="w-full bg-red-500 hover:bg-red-600"
+                        onClick={() => setOpenDialog(false)}
+                    >
+                        Delete
+                    </Button>
+                </div>
+            </Dialog>
         </div>
     );
 };

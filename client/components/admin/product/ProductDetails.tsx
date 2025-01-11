@@ -133,7 +133,7 @@ const ProductDetails = () => {
                 </Button>
 
                 <Button className="w-full h-10">
-                    <CiEdit /> Edit Product
+                    <CiEdit /> Update Product
                 </Button>
             </div>
         </div>
