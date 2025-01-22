@@ -151,7 +151,7 @@ const DeliveryPartner = () => {
     };
     return (
         <div>
-            <CustomTable<Category>
+            <CustomTable<DeliveryPartnerI>
                 data={data}
                 columns={columns}
                 searchBy="name"
@@ -164,7 +164,7 @@ const DeliveryPartner = () => {
                 className="h-screen w-[30%] bg-neutral-800"
                 title={`Product Details - ${modalType}`}
             >
-                {modalType === TYPE.VIEW && <DeliveryPartnerDetails />}
+                {modalType === TYPE.VIEW && <DeliveryPartnerDetails action={()=> {""}} secondaryAction={() => handleModal(TYPE.EDIT)}/>}
                 {modalType === TYPE.EDIT && <UpdateDeliveryPartner />}
             </Modal>
             <Dialog
@@ -182,7 +182,7 @@ const DeliveryPartner = () => {
                             setOpen(false);
                         }}
                     >
-                        Cancle
+                        Cancel
                     </Button>
                     <Button
                         className="w-full bg-red-500 hover:bg-red-600"
