@@ -13,7 +13,7 @@ import { categories } from "@/data";
 import Image from "next/image";
 import { IoCheckmarkDoneOutline, IoCloseOutline } from "react-icons/io5";
 import ImageUpload from "@/components/common/ImageUpload";
-import CustomeInput, { VARIENT } from "@/components/common/CustomeInput";
+import CustomInput, { VARIANT } from "@/components/common/CustomInput";
 
 // form validation
 const formSchema = z.object({
@@ -123,7 +123,7 @@ const AddProduct = () => {
     let formContent = (
         <>
             {/* product name  */}
-            <CustomeInput
+            <CustomInput
                 name="name"
                 label="Product Name"
                 required
@@ -132,18 +132,18 @@ const AddProduct = () => {
             />
 
             {/* product description  */}
-            <CustomeInput
+            <CustomInput
                 name="description"
                 label="Product Description"
                 required
                 placeholder="Type your product description"
                 control={form.control}
-                varient={VARIENT.TEXTAREA}
+                variant={VARIANT.TEXTAREA}
             />
 
             {/* product price & quantity  */}
             <div className="flex flex-row gap-3 w-full">
-                <CustomeInput
+                <CustomInput
                     name="price"
                     label="Product Price"
                     required
@@ -152,7 +152,7 @@ const AddProduct = () => {
                     control={form.control}
                 />
 
-                <CustomeInput
+                <CustomInput
                     name="quantity"
                     label="Product Quantity"
                     required
@@ -161,13 +161,13 @@ const AddProduct = () => {
                 />
             </div>
 
-            <CustomeInput
+            <CustomInput
                 name="category"
                 label="Choose a Category"
                 required
                 placeholder="Enter product quantity"
                 control={form.control}
-                varient={VARIENT.CHILDREN}
+                variant={VARIANT.CHILDREN}
             >
                 <div className="w-full h-full flex flex-row flex-wrap justify-around gap-5 overflow-x-hidden overflow-y-scroll">
                     {categories.map((item, index) => (
@@ -200,7 +200,7 @@ const AddProduct = () => {
                         </div>
                     ))}
                 </div>
-            </CustomeInput>
+            </CustomInput>
         </>
     );
 
@@ -208,7 +208,7 @@ const AddProduct = () => {
     if (step === STEPS.IMAGE) {
         formContent = (
             <>
-                <CustomeInput
+                <CustomInput
                     name="discountPrice"
                     label="Discount Price"
                     placeholder="Enter discount price"
@@ -216,7 +216,7 @@ const AddProduct = () => {
                     type="number"
                 />
 
-                <CustomeInput
+                <CustomInput
                     name="stock"
                     label="Stock"
                     placeholder="Enter product stock"

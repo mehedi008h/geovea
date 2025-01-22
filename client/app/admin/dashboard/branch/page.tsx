@@ -1,33 +1,33 @@
 "use client";
-import AddCategory from "@/components/admin/category/AddCategory";
-import Category from "@/components/admin/category/Category";
+import AddBranch from "@/components/admin/branch/AddBranch";
+import Branch from "@/components/admin/branch/Branch";
 import PageHeader from "@/components/admin/PageHeader";
 import Modal from "@/components/common/Model";
 import React, { useState } from "react";
 
-const CategoryPage = () => {
+const BranchPage = () => {
     const [open, setOpen] = useState<boolean>(false);
     return (
         <main>
             {/* header  */}
             <PageHeader
-                title="Category"
+                title="Branch"
                 subTitle="Manage your all category"
-                btnText="Add Category"
+                btnText="Add Branch"
                 onClick={() => setOpen(true)}
             />
 
             {/* product table  */}
-            <Category />
+            <Branch />
             <Modal
                 open={open}
                 setOpen={setOpen}
                 className="h-screen w-[30%] bg-neutral-800"
             >
-                <AddCategory />
+                <AddBranch />
             </Modal>
         </main>
     );
 };
 
-export default CategoryPage;
+export default BranchPage;

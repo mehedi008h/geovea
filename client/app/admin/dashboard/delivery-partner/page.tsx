@@ -1,33 +1,33 @@
 "use client";
-import AddCategory from "@/components/admin/category/AddCategory";
-import Category from "@/components/admin/category/Category";
+import AddDeliveryPartner from "@/components/admin/delivery-partner/AddDeliveryPartner";
+import DeliveryPartner from "@/components/admin/delivery-partner/DeliveryPartner";
 import PageHeader from "@/components/admin/PageHeader";
 import Modal from "@/components/common/Model";
 import React, { useState } from "react";
 
-const CategoryPage = () => {
+const DeliveryPartnerPage = () => {
     const [open, setOpen] = useState<boolean>(false);
     return (
         <main>
             {/* header  */}
             <PageHeader
-                title="Category"
-                subTitle="Manage your all category"
-                btnText="Add Category"
+                title="Delivery Partner"
+                subTitle="Manage your all Delivery Partner"
+                btnText="Add Delivery Partner"
                 onClick={() => setOpen(true)}
             />
 
-            {/* product table  */}
-            <Category />
+            {/* delivery partner table  */}
+            <DeliveryPartner />
             <Modal
                 open={open}
                 setOpen={setOpen}
                 className="h-screen w-[30%] bg-neutral-800"
             >
-                <AddCategory />
+                <AddDeliveryPartner />
             </Modal>
         </main>
     );
 };
 
-export default CategoryPage;
+export default DeliveryPartnerPage;

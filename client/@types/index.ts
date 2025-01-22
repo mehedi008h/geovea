@@ -15,3 +15,19 @@ export interface Category {
     name: string;
     image: string;
 }
+
+export interface Branch {
+    _id: string;
+    name: string;
+    address: string;
+}
+
+export interface DeliveryPartnerI {
+    _id: string;
+    slug: string;
+    image: string;
+    name: string;
+    email: string;
+    phone: string;
+    password: string;
+}

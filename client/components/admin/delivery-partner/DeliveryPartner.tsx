@@ -1,59 +1,61 @@
 "use client";
-
-import React, { useState } from "react";
-import { ColumnDef } from "@tanstack/react-table";
-
+import CustomTable from "@/components/common/CustomTable";
+import Modal from "@/components/common/Model";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import CustomTable from "@/components/common/CustomTable";
-import { FaRegEye } from "react-icons/fa6";
-import { CiEdit } from "react-icons/ci";
+import { ColumnDef } from "@tanstack/react-table";
+import React, { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import Modal from "@/components/common/Model";
+import { CiEdit } from "react-icons/ci";
+import { FaRegEye } from "react-icons/fa6";
+
 import Dialog from "@/components/common/Dialog";
 import { IoAlertCircleOutline } from "react-icons/io5";
-import CategoryDetails from "./CategoryDetails";
-import UpdateCategory from "./UpdateCategory";
+import DeliveryPartnerDetails from "./DeliveryPartnerDetails";
+import UpdateDeliveryPartner from "./UpdateDeliveryPartner";
+import { DeliveryPartnerI } from "@/@types";
 
-const data: Category[] = [
+const data: DeliveryPartnerI[] = [
     {
         _id: "m5gr84i9",
         slug: "m5gr84i9",
-        image: "df",
+        image: "",
         name: "Mens Fashions",
+        email: "df",
+        phone: "3636363",
+        password: "454545",
     },
     {
         _id: "m5gr84i9",
         slug: "m5gr84i9",
-        image: "df",
-        name: "success",
+        image: "",
+        name: "Mens Fashions",
+        email: "df",
+        phone: "3636363",
+        password: "454545",
     },
     {
         _id: "m5gr84i9",
         slug: "m5gr84i9",
-        image: "df",
-        name: "success",
+        image: "",
+        name: "Mens Fashions",
+        email: "df",
+        phone: "3636363",
+        password: "454545",
     },
 ];
-
-export type Category = {
-    _id: string;
-    slug: string;
-    image: string;
-    name: string;
-};
 
 enum TYPE {
     VIEW = "view",
     EDIT = "edit",
 }
 
-const Category = () => {
+const DeliveryPartner = () => {
     const [open, setOpen] = useState<boolean>(false);
     const [openDialog, setOpenDialog] = useState<boolean>(false);
     const [modalType, setModalType] = useState<TYPE>(TYPE.VIEW);
 
-    const columns: ColumnDef<Category>[] = [
+    const columns: ColumnDef<DeliveryPartnerI>[] = [
         {
             id: "select",
             header: ({ table }) => (
@@ -82,14 +84,9 @@ const Category = () => {
             accessorKey: "image",
             header: "Image",
             cell: ({ row }) => (
-                <div className="h-12 w-12 rounded-md bg-neutral-200"></div>
-            ),
-        },
-        {
-            accessorKey: "slug",
-            header: "Slug",
-            cell: ({ row }) => (
-                <div className="capitalize">{row.getValue("slug")}</div>
+                <div className="h-12 w-12 rounded-md bg-neutral-200">
+                    {row.getValue("image")}
+                </div>
             ),
         },
         {
@@ -97,6 +94,20 @@ const Category = () => {
             header: "Name",
             cell: ({ row }) => (
                 <div className="capitalize">{row.getValue("name")}</div>
+            ),
+        },
+        {
+            accessorKey: "email",
+            header: "Email",
+            cell: ({ row }) => (
+                <div className="capitalize">{row.getValue("email")}</div>
+            ),
+        },
+        {
+            accessorKey: "phone",
+            header: "Phone",
+            cell: ({ row }) => (
+                <div className="capitalize">{row.getValue("phone")}</div>
             ),
         },
         {
@@ -153,8 +164,8 @@ const Category = () => {
                 className="h-screen w-[30%] bg-neutral-800"
                 title={`Product Details - ${modalType}`}
             >
-                {modalType === TYPE.VIEW && <CategoryDetails />}
-                {modalType === TYPE.EDIT && <UpdateCategory />}
+                {modalType === TYPE.VIEW && <DeliveryPartnerDetails />}
+                {modalType === TYPE.EDIT && <UpdateDeliveryPartner />}
             </Modal>
             <Dialog
                 open={openDialog}
@@ -185,4 +196,4 @@ const Category = () => {
     );
 };
 
-export default Category;
+export default DeliveryPartner;

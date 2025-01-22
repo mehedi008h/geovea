@@ -34,14 +34,14 @@ interface Props<T> {
     data: T[];
     columns: ColumnDef<T>[];
     searchBy: string;
-    searchPalceholder: string;
+    searchPlaceholder: string;
 }
 
-const CustomeTable = <T,>({
+const CustomTable = <T,>({
     data,
     columns,
     searchBy,
-    searchPalceholder,
+    searchPlaceholder,
 }: Props<T>) => {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] =
@@ -72,7 +72,7 @@ const CustomeTable = <T,>({
         <div className="bg-neutral-900 w-full my-5 p-2 rounded-md">
             <div className="flex items-center py-4">
                 <Input
-                    placeholder={searchPalceholder}
+                    placeholder={searchPlaceholder}
                     value={
                         (table
                             .getColumn(searchBy)
@@ -198,4 +198,4 @@ const CustomeTable = <T,>({
     );
 };
 
-export default CustomeTable;
+export default CustomTable;

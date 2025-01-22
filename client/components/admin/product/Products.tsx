@@ -8,7 +8,7 @@ import { CiEdit } from "react-icons/ci";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import CustomeTable from "@/components/common/CustomeTable";
+import CustomTable from "@/components/common/CustomTable";
 import { Badge } from "@/components/ui/badge";
 import Modal from "@/components/common/Model";
 import Dialog from "@/components/common/Dialog";
@@ -188,11 +188,11 @@ export const Products = () => {
     // render the component
     return (
         <div>
-            <CustomeTable<Product>
+            <CustomTable<Product>
                 data={data}
                 columns={columns}
                 searchBy="name"
-                searchPalceholder="Search by name"
+                searchPlaceholder="Search by name"
             />
             <Modal
                 open={open}

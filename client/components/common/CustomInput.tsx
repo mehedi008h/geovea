@@ -9,7 +9,7 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 
-export enum VARIENT {
+export enum VARIANT {
     INPUT = "input",
     SELECT = "select",
     TEXTAREA = "textarea",
@@ -23,18 +23,18 @@ interface Props {
     required?: boolean;
     type?: React.HTMLInputTypeAttribute | undefined;
     control: any;
-    varient?: VARIENT;
+    variant?: VARIANT;
     children?: React.ReactNode;
 }
 
-const CustomeInput = ({
+const CustomInput = ({
     name,
     label,
     placeholder,
     required,
     type,
     control,
-    varient = VARIENT.INPUT,
+    variant = VARIANT.INPUT,
     children,
 }: Props) => {
     return (
@@ -51,9 +51,9 @@ const CustomeInput = ({
                     )}
                     <FormControl>
                         {/* other fields  */}
-                        {varient === VARIENT.CHILDREN ? (
+                        {variant === VARIANT.CHILDREN ? (
                             children
-                        ) : varient === VARIENT.TEXTAREA ? (
+                        ) : variant === VARIANT.TEXTAREA ? (
                             <Textarea
                                 placeholder={placeholder}
                                 {...field}
@@ -75,4 +75,4 @@ const CustomeInput = ({
     );
 };
 
-export default CustomeInput;
+export default CustomInput;

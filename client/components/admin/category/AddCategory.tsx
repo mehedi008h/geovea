@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Category } from "@/@types";
-import CustomeInput from "@/components/common/CustomeInput";
+import CustomInput from "@/components/common/CustomInput";
 import ImageUpload from "@/components/common/ImageUpload";
 
 // form validation
@@ -54,8 +54,8 @@ const AddCategory = () => {
 
                 <Form {...form}>
                     <div className="space-y-6 w-full mt-8 ">
-                        {/* product name  */}
-                        <CustomeInput
+                        {/* category name  */}
+                        <CustomInput
                             name="name"
                             label="Category Name"
                             required
