@@ -57,14 +57,14 @@ const CustomeInput = ({
                             <Textarea
                                 placeholder={placeholder}
                                 {...field}
-                                className="text-neutral-200 border focus:border-0 border-neutral-400"
+                                className="text-neutral-200 border focus:border-primary border-neutral-400"
                             />
                         ) : (
                             <Input
                                 placeholder={placeholder}
                                 {...field}
                                 type={type}
-                                className="text-neutral-200 border focus:border-0 outline-none border-neutral-400"
+                                className="text-neutral-200 border focus:border-primary focus:outline-none outline-none border-neutral-400"
                             />
                         )}
                     </FormControl>
