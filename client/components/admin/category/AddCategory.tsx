@@ -63,8 +63,8 @@ const AddCategory = () => {
                             control={form.control}
                         />
 
-                        <h3 className="text-neutral-200 my-5">Choose Images</h3>
-
+                        {/* category image */}
+                        <h3 className="text-neutral-200 my-5">Choose Image</h3>
                         <div className="w-full flex justify-center">
                             <ImageUpload
                                 id="image"
