@@ -12,6 +12,11 @@ const appConfig = () => ({
         REFRESH_SECRET: getEnv("JWT_REFRESH_SECRET"),
         REFRESH_EXPIRES_IN: getEnv("JWT_REFRESH_EXPIRES_IN", "30d"),
     },
+    CLOUDINARY: {
+        CLOUD_NAME: getEnv("CLOUDINARY_CLOUD_NAME"),
+        API_KEY: getEnv("CLOUDINARY_API_KEY"),
+        API_SECRET: getEnv("CLOUDINARY_API_SECRET"),
+    },
     MAILER_SENDER: getEnv("MAILER_SENDER"),
     RESEND_API_KEY: getEnv("RESEND_API_KEY"),
     ADMIN: {

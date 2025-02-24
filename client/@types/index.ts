@@ -10,9 +10,10 @@ export interface Product {
     stock: string;
 }
 
-export interface Category {
+export interface CategoryI {
     _id: string;
     name: string;
+    description: string;
     image: string;
 }
 

@@ -11,12 +11,13 @@ import { Input } from "../ui/input";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { IoCloseOutline } from "react-icons/io5";
+import { CategoryI } from "@/@types";
 
 interface Props extends ComponentProps<"div"> {
     setData: (data: string) => void;
-    setCustomValue: (id: string, value: any) => void;
+    setCustomValue: (id: keyof CategoryI, value: string) => void;
     show?: boolean;
-    id?: string;
+    id?: keyof CategoryI;
 }
 
 const ImageUpload = forwardRef<HTMLDivElement, Props>(

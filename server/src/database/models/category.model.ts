@@ -2,6 +2,7 @@ import mongoose, { Document, Schema } from "mongoose";
 
 export interface CategoryDocument extends Document {
     name: string;
+    description: string;
     image: {
         public_id: string;
         url: string;
@@ -14,14 +15,13 @@ export interface CategoryDocument extends Document {
 const categorySchema = new Schema<CategoryDocument>(
     {
         name: { type: String, required: true, unique: true },
+        description: { type: String, required: true, unique: true },
         image: {
             public_id: {
                 type: String,
-                required: true,
             },
             url: {
                 type: String,
-                required: true,
             },
         },
         createdAt: {

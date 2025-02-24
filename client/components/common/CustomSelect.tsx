@@ -6,36 +6,28 @@ import {
     FormLabel,
     FormMessage,
 } from "../ui/form";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
-
-export enum VARIANT {
-    INPUT = "input",
-    SELECT = "select",
-    TEXTAREA = "textarea",
-    CHILDREN = "children",
-}
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "../ui/select";
 
 interface Props {
     name: string;
     label: string;
     placeholder?: string;
     required?: boolean;
-    type?: React.HTMLInputTypeAttribute | undefined;
     control: any;
-    variant?: VARIANT;
-    children?: React.ReactNode;
 }
 
-const CustomInput = ({
+const CustomSelect = ({
     name,
     label,
     placeholder,
     required,
-    type,
     control,
-    variant = VARIANT.INPUT,
-    children,
 }: Props) => {
     return (
         <FormField
@@ -49,9 +41,16 @@ const CustomInput = ({
                             {required && <p className="text-red-500 ms-1">*</p>}
                         </FormLabel>
                     )}
-                    <FormControl>
-                        {/* other fields  */}
-                        {variant === VARIANT.CHILDREN ? (
+                    <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                    >
+                        <FormControl>
+                            <SelectTrigger>
+                                <SelectValue placeholder={placeholder} />
+                            </SelectTrigger>
+                            {/* other fields  */}
+                            {/* {variant === VARIANT.CHILDREN ? (
                             children
                         ) : variant === VARIANT.TEXTAREA ? (
                             <Textarea
@@ -66,8 +65,20 @@ const CustomInput = ({
                                 type={type}
                                 className="text-neutral-200 border focus:border-primary focus:outline-none outline-none border-neutral-400"
                             />
-                        )}
-                    </FormControl>
+                        )} */}
+                        </FormControl>
+                        <SelectContent>
+                            <SelectItem value="m@example.com">
+                                m@example.com
+                            </SelectItem>
+                            <SelectItem value="m@google.com">
+                                m@google.com
+                            </SelectItem>
+                            <SelectItem value="m@support.com">
+                                m@support.com
+                            </SelectItem>
+                        </SelectContent>
+                    </Select>
                     <FormMessage />
                 </FormItem>
             )}
@@ -75,4 +86,4 @@ const CustomInput = ({
     );
 };
 
-export default CustomInput;
+export default CustomSelect;

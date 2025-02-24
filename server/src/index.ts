@@ -3,6 +3,7 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import ip from "ip";
+import { v2 as cloudinary } from "cloudinary";
 import { config } from "./config/app.config";
 import { HTTPSTATUS } from "./config/http.config";
 import { asyncHandler } from "./middlewares/asyncHandler";
@@ -16,7 +17,6 @@ import orderRoutes from "./modules/order/order.routes";
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -27,6 +27,13 @@ app.use(
 );
 
 app.use(cookieParser());
+
+// Setting up cloudinary configuration
+cloudinary.config({
+    cloud_name: config.CLOUDINARY.CLOUD_NAME,
+    api_key: config.CLOUDINARY.API_KEY,
+    api_secret: config.CLOUDINARY.API_SECRET,
+});
 
 // api routes
 app.get(

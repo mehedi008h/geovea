@@ -6,7 +6,8 @@ export interface Image {
 // category
 export interface CategoryDto {
     name: string;
-    image: Image;
+    description: string;
+    image?: string;
 }
 
 // product

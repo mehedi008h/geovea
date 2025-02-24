@@ -10,7 +10,8 @@ const imageSchema = z.object({
 // category schema
 export const categorySchema = z.object({
     name: z.string().trim(),
-    image: imageSchema,
+    description: z.string().trim(),
+    image: z.string().optional(),
 });
 
 // product schema

@@ -3,6 +3,7 @@ import { asyncHandler } from "../../middlewares/asyncHandler";
 import { HTTPSTATUS } from "../../config/http.config";
 import { CategoryService } from "./category.service";
 import { categorySchema } from "../../common/validators/product.validator";
+import { logger } from "../../common/utils/logger";
 
 export class CategoryController {
     private categoryService: CategoryService;
@@ -14,6 +15,7 @@ export class CategoryController {
     // create a new category
     public createCategory = asyncHandler(
         async (req: Request, res: Response): Promise<any> => {
+            console.log("info", JSON.stringify(req.body));
             // validate request body
             const body = categorySchema.parse(req.body);
 
@@ -22,7 +24,6 @@ export class CategoryController {
             // return success response
             return res.status(HTTPSTATUS.CREATED).json({
                 message: "Category Created successfully",
-                category,
             });
         }
     );
